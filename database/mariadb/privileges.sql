@@ -1,3 +1,3 @@
 USE mysql;
-GRANT ALL PRIVILEGES ON laravel_dev.* TO 'dev'@'%';
+GRANT ALL PRIVILEGES ON default_db.* TO 'dev'@'%';
 FLUSH PRIVILEGES;
