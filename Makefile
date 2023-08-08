@@ -6,8 +6,7 @@ nodeversion ?= ""
 nvmaction ?= null
 npmcommand ?= ""
 
-help:
-	@optimize 'asd'
+
 optimize:
 	docker exec $(container) bash -c "cd /var/www/html/$(projectpath);php artisan optimize:clear;"
 permissions:
@@ -15,4 +14,7 @@ permissions:
 nvmexec:
 	docker exec -it c_nvm bash -l -c \
 		"cd /var/www/html/$(projectpath); \
-		nvm exec ${nodeversion} ${npmcommand}"; 
+		nvm exec ${nodeversion} ${npmcommand}";
+nvm-%:
+	docker exec -it c_nvm bash -l -c \
+		"nvm $* ${nodeversion}"
