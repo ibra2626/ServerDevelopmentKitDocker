@@ -42,7 +42,7 @@ services:
     restart: always
     hostname: php74 
     ports:
-      - "8000:9000"
+      - "9001:9000"
     volumes:
       - ./Projects:/var/www/html/
       - ./php74/www.conf:/usr/local/etc/php-fpm.d/www.conf
@@ -58,7 +58,7 @@ services:
       context: ./database/mysql
     hostname: mysql
     ports:
-      - 3308:3306
+      - 3306:3306
     volumes:
       - mysql:/var/lib/mysql
 volumes:
