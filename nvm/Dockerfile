@@ -9,6 +9,7 @@ ENV NODE_VERSION=18
 RUN apt-get update \
     && apt-get install -y --no-install-recommends build-essential\
         libssl-dev \
+        libpng-dev \
         git \
         curl \
         nano \
@@ -23,4 +24,4 @@ RUN git checkout ${NVM_VERSION} \
 
 RUN sed -e '/[ -z "$PS1" ] && return/s/^/#/g' -i /root/.bashrc
 
-WORKDIR "${HOME}"
+WORKDIR "/var/www/html/Subu"

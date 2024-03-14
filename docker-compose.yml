@@ -2,7 +2,7 @@ version: '3.9'
 services:
   s_webserver:
     container_name: c_web_server
-    build: 
+    build:
       context: ./nginx
     restart: always
     ports:
@@ -13,6 +13,9 @@ services:
     depends_on:
       - s_php8
       - s_php74
+    networks:
+      serverdevelopmentkit:
+        ipv4_address: 10.5.0.2
   s_nvm:
     container_name: c_nvm
     build:
@@ -21,12 +24,15 @@ services:
       - ./Projects:/var/www/html/
     restart: on-failure
     command: ["sleep","infinity"]
+    networks:
+      serverdevelopmentkit:
+        ipv4_address: 10.5.0.6
   s_php8:
     container_name: c_php8
     build:
       context: ./php8
     restart: always
-    hostname: php8 
+    hostname: php8
     ports:
       - "9000:9000"
     volumes:
@@ -35,12 +41,16 @@ services:
       - ./php8/php.ini:/usr/local/etc/php/php.ini
     depends_on:
       - s_mysql
+    networks:
+      serverdevelopmentkit:
+        ipv4_address: 10.5.0.3
+
   s_php74:
     container_name: c_php74
     build:
       context: ./php74
     restart: always
-    hostname: php74 
+    hostname: php74
     ports:
       - "9001:9000"
     volumes:
@@ -49,6 +59,9 @@ services:
       - ./php74/php.ini:/usr/local/etc/php/php.ini
     depends_on:
       - s_mysql
+    networks:
+      serverdevelopmentkit:
+        ipv4_address: 10.5.0.4
   s_mysql:
     container_name: c_mysql
     env_file:
@@ -61,6 +74,16 @@ services:
       - 3306:3306
     volumes:
       - mysql:/var/lib/mysql
+    networks:
+      serverdevelopmentkit:
+        ipv4_address: 10.5.0.5
 volumes:
   mysql:
 
+networks:
+  serverdevelopmentkit:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.5.0.0/16
+          gateway: 10.5.0.1

@@ -1,4 +1,4 @@
-FROM mariadb:latest
+FROM mariadb:11.4.1-rc-jammy
 
 RUN chown -R mysql:root /var/lib/mysql/
 
