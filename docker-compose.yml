@@ -57,7 +57,7 @@ services:
         context: ./php8.0
         dockerfile: Dockerfile
         target: php80
-      restart: always
+      restart: unless-stopped
       hostname: php80
       ports:
         - "9002:9000"
@@ -76,7 +76,7 @@ services:
         context: ./php82
         dockerfile: Dockerfile
         target: php82
-      restart: always
+      restart: unless-stopped
       hostname: php82
       ports:
         - "9004:9000"
@@ -95,7 +95,7 @@ services:
       context: ./php83
       dockerfile: Dockerfile
       target: php83
-    restart: always
+    restart: unless-stopped
     hostname: php83
     ports:
       - "9006:9000"
@@ -130,7 +130,7 @@ services:
     container_name: c_php56
     build:
       context: ./php56
-    restart: always
+    restart: unless-stopped
     hostname: php56
     ports:
       - "9009:9000"
