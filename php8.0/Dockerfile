@@ -1,5 +1,4 @@
-FROM php:7.4-fpm-alpine3.16
-RUN apk update
+FROM php:8.0.2-fpm-alpine3.13 as php80
 RUN apk add --no-cache --update libzip-dev
 RUN apk add --no-cache --update zip unzip
 RUN apk add --no-cache --update git
@@ -13,26 +12,25 @@ RUN docker-php-ext-install ctype
 RUN docker-php-ext-install fileinfo
 RUN docker-php-ext-install pdo
 RUN docker-php-ext-install pdo_mysql
-RUN docker-php-ext-install tokenizer
-RUN docker-php-ext-install json
 RUN docker-php-ext-install exif
 RUN docker-php-ext-install gd
 
 
 RUN apk add --no-cache \
         libjpeg-turbo-dev \
-        libpng-dev \
         libwebp-dev \
         freetype-dev
 
 RUN docker-php-ext-configure gd --with-jpeg --with-webp --with-freetype
 RUN docker-php-ext-install gd
-    
-# RUN apk add update && \
-#  apk add install -y \
-#     nodejs npm
 
-# RUN curl -fsSL https://deb.nodesource.com/setup_14.x | bash - && \
-#  apk add install -y nodejs
+RUN apk add --update bzip2-dev
+
+RUN docker-php-ext-install bz2
+
+RUN apk add --no-cache $PHPIZE_DEPS \
+    && pecl install xdebug-3.1.0 \
+    && docker-php-ext-enable xdebug
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+

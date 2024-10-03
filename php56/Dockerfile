@@ -1,4 +1,4 @@
-FROM php:7.4-fpm-alpine3.16
+FROM php:5.6-fpm-alpine
 RUN apk update
 RUN apk add --no-cache --update libzip-dev
 RUN apk add --no-cache --update zip unzip
