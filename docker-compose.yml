@@ -1,5 +1,16 @@
-version: '3.9'
 services:
+#  s_portainer:
+#    container_name: c_portainer
+#    image: portainer/portainer-ce:latest
+#    restart: unless-stopped
+#    ports:
+#      - "7000:9000"
+#    volumes:
+#      - /var/run/docker.sock:/var/run/docker.sock
+#      - portainer_data:/data
+#    networks:
+#      serverdevelopmentkit:
+#        ipv4_address: 10.5.0.20
   s_webserver:
     container_name: c_web_server
     build:
@@ -15,9 +26,9 @@ services:
     depends_on:
       - s_php8
       - s_php74
-      - s_php80
-      - s_php56
-      - s_php82
+#      - s_php80
+#      - s_php56
+#      - s_php82
     networks:
       serverdevelopmentkit:
         ipv4_address: 10.5.0.2
@@ -51,63 +62,63 @@ services:
     networks:
       serverdevelopmentkit:
         ipv4_address: 10.5.0.3
-  s_php80:
-      container_name: c_php80
-      build:
-        context: ./php8.0
-        dockerfile: Dockerfile
-        target: php80
-      restart: unless-stopped
-      hostname: php80
-      ports:
-        - "9002:9000"
-      volumes:
-        - ./Projects:/var/www/html/
-        - ./php8.0/www.conf:/usr/local/etc/php-fpm.d/www.conf
-        - ./php8.0/php.ini:/usr/local/etc/php/php.ini
-      depends_on:
-        - s_mysql
-      networks:
-        serverdevelopmentkit:
-          ipv4_address: 10.5.0.7
-  s_php82:
-      container_name: c_php82
-      build:
-        context: ./php82
-        dockerfile: Dockerfile
-        target: php82
-      restart: unless-stopped
-      hostname: php82
-      ports:
-        - "9004:9000"
-      volumes:
-        - ./Projects:/var/www/html/
-        - ./php82/www.conf:/usr/local/etc/php-fpm.d/www.conf
-        - ./php82/php.ini:/usr/local/etc/php/php.ini
-      depends_on:
-        - s_mysql
-      networks:
-        serverdevelopmentkit:
-          ipv4_address: 10.5.0.11
-  s_php83:
-    container_name: c_php83
-    build:
-      context: ./php83
-      dockerfile: Dockerfile
-      target: php83
-    restart: unless-stopped
-    hostname: php83
-    ports:
-      - "9006:9000"
-    volumes:
-      - ./Projects:/var/www/html/
-      - ./php83/www.conf:/usr/local/etc/php-fpm.d/www.conf
-      - ./php83/php.ini:/usr/local/etc/php/php.ini
-    depends_on:
-      - s_mysql
-    networks:
-      serverdevelopmentkit:
-        ipv4_address: 10.5.0.10
+#  s_php80:
+#      container_name: c_php80
+#      build:
+#        context: ./php8.0
+#        dockerfile: Dockerfile
+#        target: php80
+#      restart: unless-stopped
+#      hostname: php80
+#      ports:
+#        - "9002:9000"
+#      volumes:
+#        - ./Projects:/var/www/html/
+#        - ./php8.0/www.conf:/usr/local/etc/php-fpm.d/www.conf
+#        - ./php8.0/php.ini:/usr/local/etc/php/php.ini
+#      depends_on:
+#        - s_mysql
+#      networks:
+#        serverdevelopmentkit:
+#          ipv4_address: 10.5.0.7
+#  s_php82:
+#      container_name: c_php82
+#      build:
+#        context: ./php82
+#        dockerfile: Dockerfile
+#        target: php82
+#      restart: unless-stopped
+#      hostname: php82
+#      ports:
+#        - "9004:9000"
+#      volumes:
+#        - ./Projects:/var/www/html/
+#        - ./php82/www.conf:/usr/local/etc/php-fpm.d/www.conf
+#        - ./php82/php.ini:/usr/local/etc/php/php.ini
+#      depends_on:
+#        - s_mysql
+#      networks:
+#        serverdevelopmentkit:
+#          ipv4_address: 10.5.0.11
+#  s_php83:
+#    container_name: c_php83
+#    build:
+#      context: ./php83
+#      dockerfile: Dockerfile
+#      target: php83
+#    restart: unless-stopped
+#    hostname: php83
+#    ports:
+#      - "9006:9000"
+#    volumes:
+#      - ./Projects:/var/www/html/
+#      - ./php83/www.conf:/usr/local/etc/php-fpm.d/www.conf
+#      - ./php83/php.ini:/usr/local/etc/php/php.ini
+#    depends_on:
+#      - s_mysql
+#    networks:
+#      serverdevelopmentkit:
+#        ipv4_address: 10.5.0.10
   s_php74:
     container_name: c_php74
     build:
@@ -122,28 +133,30 @@ services:
       - ./php74/php.ini:/usr/local/etc/php/php.ini
     depends_on:
       - s_mysql
-      - s_php80
+#      - s_php80
+      - s_redis
+      - s_php8
     networks:
       serverdevelopmentkit:
         ipv4_address: 10.5.0.4
-  s_php56:
-    container_name: c_php56
-    build:
-      context: ./php56
-    restart: unless-stopped
-    hostname: php56
-    ports:
-      - "9009:9000"
-    volumes:
-      - ./Projects:/var/www/html/
-      - ./php56/www.conf:/usr/local/etc/php-fpm.d/www.conf
-      - ./php56/php.ini:/usr/local/etc/php/php.ini
-    depends_on:
-      - s_mysql
-      - s_mysql56
-    networks:
-      serverdevelopmentkit:
-        ipv4_address: 10.5.0.8
+#  s_php56:
+#    container_name: c_php56
+#    build:
+#      context: ./php56
+#    hostname: php56
+#    restart: always
+#    ports:
+#      - "9009:9000"
+#    volumes:
+#      - ./Projects:/var/www/html/
+#      - ./php56/www.conf:/usr/local/etc/php-fpm.d/www.conf
+#      - ./php56/php.ini:/usr/local/etc/php/php.ini
+#    depends_on:
+#      - s_mysql
+#      - s_mysql56
+#    networks:
+#      serverdevelopmentkit:
+#        ipv4_address: 10.5.0.8
   s_mysql:
     container_name: c_mysql_devkit
     env_file:
@@ -159,37 +172,52 @@ services:
     networks:
       serverdevelopmentkit:
         ipv4_address: 10.5.0.5
-  s_mysql56:
-    container_name: c_mysql56_devkit
-    env_file:
-      - ./database/mysql56/.env
-    restart: always
-    build:
-      context: ./database/mysql56
-    hostname: mysql56
-    ports:
-      - 3307:3306
-    volumes:
-      - mysql56:/var/lib/mysql
-    networks:
-      serverdevelopmentkit:
-        ipv4_address: 10.5.0.9
-  s_golang:
-    container_name: c_golang
+#  s_mysql56:
+#    container_name: c_mysql56_devkit
+#    env_file:
+#      - ./database/mysql56/.env
+#    build:
+#      context: ./database/mysql56
+#    hostname: mysql56
+#    restart: always
+#    ports:
+#      - 3307:3307
+#    volumes:
+#      - mysql56:/var/lib/mysql
+#    networks:
+#      serverdevelopmentkit:
+#        ipv4_address: 10.5.0.9
+#  s_golang:
+#    container_name: c_golang
+#    restart: unless-stopped
+#    build:
+#      context: ./Golang
+#    volumes:
+#      - ./Projects/Ozel:/work
+#    stdin_open: true
+#    tty: true
+#    command: air  # Hot-reload için `air` kullan
+#    networks:
+#      serverdevelopmentkit:
+#        ipv4_address: 10.5.0.12
+  s_redis:
+    container_name: c_redis
     restart: unless-stopped
+    hostname: redis
     build:
-      context: ./Golang
+      context: ./redis
+    ports:
+      - 6378:6379
     volumes:
-      - ./Projects:/work
-    stdin_open: true
-    tty: true
-    command: air  # Hot-reload için `air` kullan
+      - redis:/data
     networks:
       serverdevelopmentkit:
-        ipv4_address: 10.5.0.12
+        ipv4_address: 10.5.0.13
 volumes:
   mysql:
-  mysql56:
+#  mysql56:
+  redis:
+#  portainer_data:
 networks:
   serverdevelopmentkit:
     driver: bridge

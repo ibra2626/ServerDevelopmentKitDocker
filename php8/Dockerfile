@@ -14,10 +14,12 @@ RUN docker-php-ext-install pdo
 RUN docker-php-ext-install pdo_mysql
 RUN docker-php-ext-install exif
 RUN docker-php-ext-install gd
+RUN docker-php-ext-install pcntl
 
 
 RUN apk add --no-cache \
         libjpeg-turbo-dev \
+
         libwebp-dev \
         freetype-dev
 
@@ -35,3 +37,20 @@ RUN apk add --no-cache $PHPIZE_DEPS \
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
+
+
+RUN apk add --update supervisor
+
+COPY ./supervisor/supervisord.ini /etc/supervisor.d/horizon.ini
+
+COPY ./start.sh /tmp/start.sh
+
+RUN chmod +x /tmp/start.sh
+
+RUN touch /var/run/supervisord.sock
+
+RUN chown root:root /var/run/supervisord.sock
+
+RUN chmod 777 /var/run/supervisord.sock
+
+ENTRYPOINT ["/tmp/start.sh"]

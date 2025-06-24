@@ -1,18 +1,23 @@
-FROM golang:1.18-alpine
+# 🐳 En son Go sürümüyle Alpine kullan
+FROM golang:1.23-alpine
 
-# Gerekli paketleri yükle
-RUN apk add --no-cache git curl
-
-# Go modüllerini etkinleştir ve proxy ayarla
-ENV GO111MODULE=on
-ENV GOPROXY=https://proxy.golang.org,direct
-
-# Air'i yükle
-RUN go install github.com/cosmtrek/air@v1.40.4
-
-# $GOPATH/bin'i $PATH'e ekle
-ENV PATH="/go/bin:${PATH}"
-
+# Çalışma dizinini ayarla
 WORKDIR /work
 
+# Gerekli bağımlılıkları yükle
+RUN apk add --no-cache git curl build-base
+
+RUN go install github.com/air-verse/air@latest
+
+# Air'i yükle (Hot Reload için)
+RUN #go install github.com/cosmtrek/air@latest
+
+# PATH ayarlarını yap
+ENV PATH="/go/bin:${PATH}"
+
+
+# Proje dosyalarını konteynere kopyala
+COPY . .
+
+# Varsayılan komut: Air çalıştır
 CMD ["air"]
